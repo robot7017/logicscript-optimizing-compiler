@@ -187,3 +187,38 @@ Notes:
   - If lexical analysis fails on a line, that line must not be emitted as a successful `phase_1_lexer` row.
   - If syntax parsing fails on a line, `phase_1_lexer` may still contain that line's token row, but `phase_2_parser` must not emit a successful AST row for that line.
 - If a phase fails, later phases must not run.
+
+
+## 6) Internal Integration Contracts (Team Coordination)
+
+This section defines the internal data passing contracts between phases to ensure seamless pipeline integration. These fields are for internal memory use only and some must be cleaned before final JSON export.
+
+### 6.1) Phase 3 -> Phase 4 (The `original_ast` requirement)
+According to the project spec, Phase 4 must generate a truth table comparing the original and optimized expressions. Therefore, Phase 3 must secretly pass the original AST to Phase 4 in memory.
+
+- Contract: In the `phase_3_rows` list returned by the Optimizer, every dictionary must include an additional key `"original_ast"` alongside the required `"line"` and `"ast"`.
+- Example internal row from Phase 3:
+```json
+{
+  "line": 3,
+  "ast": ["LET", "VAR_R", "VAR_P"],
+  "original_ast": ["LET", "VAR_R", ["OR", "VAR_P", "FALSE"]]
+}
+```
+- Note to Main Pipeline (`logic_compiler.py`): Before dumping the final `compiler_trace.json`, the main script must ensure the `phase_3_optimizer` list is cleaned (i.e., delete the `"original_ast"` key if it exists) so the final output strictly matches the public SPEC.
+
+### 6.2) Phase 4 -> Main Pipeline (Execution Error Handling)
+If Phase 4 encounters an uninitialized variable, it will gracefully halt and return an `"error"` object inside its result dictionary.
+
+- Contract: The `run_executor` function will return a dictionary. If an execution error occurs, this dictionary will contain an `"error"` key.
+- Note to Main Pipeline (`logic_compiler.py`): The SPEC requires the `"error"` object to be at the root level of the JSON output, NOT nested inside `"phase_4_execution"`. 
+- Required handling in `logic_compiler.py`:
+```python
+executor_results = executor.run_executor(optimizer_results)
+
+if "error" in executor_results:
+    # Pop the error to the root level of the pipeline trace
+    pipeline_results_dict["error"] = executor_results.pop("error")
+    
+pipeline_results_dict["phase_4_execution"] = executor_results
+```
