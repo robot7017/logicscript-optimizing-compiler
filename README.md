@@ -93,15 +93,18 @@ For each simplified expression:
 ## Command-Line Usage
 
 Run the compiler with:
+
 ```md
 ```bash
 python logic_compiler.py <input_file> <output_file>
 ```
+
 Example:
 
 ```bash
 python logic_compiler.py example/program_valid.txt compiler_trace.json
 ```
+
 ## Input Format
 
 The input file must contain one LogicScript statement per non-empty line.
@@ -135,6 +138,7 @@ The compiler writes a JSON trace file containing:
 All boolean values in JSON output are uppercase strings:
 - `"TRUE"`
 - `"FALSE"`
+
 ## Example Test Files
 
 ### Valid programs
@@ -148,6 +152,7 @@ All boolean values in JSON output are uppercase strings:
 - `example/program_error_execution_uninitialized.txt`
 
 ## How to Run Example Cases
+
 ```bash
 # 1. Successful compilation
 python logic_compiler.py example/program_valid.txt out_valid.json
@@ -169,30 +174,31 @@ python logic_compiler.py example/program_error_syntax_missing_then.txt out_missi
 python logic_compiler.py example/program_error_execution_uninitialized.txt out_exec_error.json
 ```
 ## Testing
-
-Unit test files are located in `tests/`:
-```bash
-tests/test_lexer.py
-
-tests/test_parser.py
-
-tests/test_executor.py
-```
-If you run tests manually, make sure you are in the project root directory. Example:
-
 ```md
+Unit test files are located in `tests/`:
+```
 - `tests/test_lexer.py`
 - `tests/test_parser.py`
 - `tests/test_executor.py`
+
+```md
+If you run tests manually, make sure you are in the project root directory.
 ```
+Example:
+
+```bash
+python tests/test_lexer.py
+python tests/test_parser.py
+python tests/test_executor.py
+```
+
 ## Development Notes
 This repository is organized in modular development form for readability and collaboration.
 
 ## Final Submission Packaging
 This repository is kept in modular form for development, debugging, and collaboration. For the final course submission that requires a self-contained single Python file, use:
-```bash
-logic_compiler_single.py
-```
+- `logic_compiler_single.py`
+  
 The modular files (`lexer.py`, `parser.py`, `optimizer.py`, `executor.py`, and the orchestrating `logic_compiler.py`) are preserved in the repository for readability and testing.
 
 ## Constraints and Design Choices
@@ -201,7 +207,7 @@ The modular files (`lexer.py`, `parser.py`, `optimizer.py`, `executor.py`, and t
 - The optimizer preserves statement structure and only simplifies expressions
 - Equivalence checking is truth-table-based
 - Errors are reported gracefully in JSON rather than crashing with a Python traceback
-Errors are reported gracefully in JSON rather than crashing with a Python traceback
+
 
 ## Authors / Collaboration
 
