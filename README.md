@@ -169,7 +169,6 @@ python logic_compiler.py example/program_error_missing_operand.txt out_syntax_er
 python logic_compiler.py example/program_error_syntax_missing_then.txt out_missing_then.json
 
 # 6. Execution error case
-
 python logic_compiler.py example/program_error_execution_uninitialized.txt out_exec_error.json
 ```
 ## Testing
@@ -194,7 +193,7 @@ This repository is organized in modular development form for readability and col
 
 ## Final Submission Packaging
 
-This repository is kept in modular form for development, debugging, and collaboration. 
+This repository is kept in modular form for development, debugging, and collaboration.
 For the final course submission that requires a self-contained single Python file, use:
 
 - `logic_compiler_single.py`
@@ -207,7 +206,6 @@ The modular files (`lexer.py`, `parser.py`, `optimizer.py`, `executor.py`, and t
 - The optimizer preserves statement structure and only simplifies expressions
 - Equivalence checking is truth-table-based
 - Errors are reported gracefully in JSON rather than crashing with a Python traceback
-
 
 ## Authors / Collaboration
 
