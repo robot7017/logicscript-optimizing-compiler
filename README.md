@@ -94,7 +94,6 @@ For each simplified expression:
 
 Run the compiler with:
 
-```md
 ```bash
 python logic_compiler.py <input_file> <output_file>
 ```
@@ -174,18 +173,15 @@ python logic_compiler.py example/program_error_syntax_missing_then.txt out_missi
 python logic_compiler.py example/program_error_execution_uninitialized.txt out_exec_error.json
 ```
 ## Testing
-```md
+
 Unit test files are located in `tests/`:
-```
 - `tests/test_lexer.py`
 - `tests/test_parser.py`
 - `tests/test_executor.py`
 
-```md
 If you run tests manually, make sure you are in the project root directory.
-```
-Example:
 
+Example:
 ```bash
 python tests/test_lexer.py
 python tests/test_parser.py
@@ -193,10 +189,15 @@ python tests/test_executor.py
 ```
 
 ## Development Notes
+
 This repository is organized in modular development form for readability and collaboration.
 
 ## Final Submission Packaging
-This repository is kept in modular form for development, debugging, and collaboration. For the final course submission that requires a self-contained single Python file, use:
+
+This repository is kept in modular form for development, debugging, and collaboration. 
+
+For the final course submission that requires a self-contained single Python file, use:
+
 - `logic_compiler_single.py`
   
 The modular files (`lexer.py`, `parser.py`, `optimizer.py`, `executor.py`, and the orchestrating `logic_compiler.py`) are preserved in the repository for readability and testing.
