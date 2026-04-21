@@ -102,7 +102,7 @@ Example:
 ```bash
 python logic_compiler.py example/program_valid.txt compiler_trace.json
 ```
-Input Format
+## Input Format
 The input file must contain one LogicScript statement per non-empty line.
 
 Supported statements:
@@ -133,7 +133,7 @@ Recursive cases:
 
 (E1 IMPLIES E2)
 
-Output Format
+## Output Format
 The compiler writes a JSON trace file containing:
 
 phase_1_lexer
@@ -152,7 +152,7 @@ All boolean values in JSON output are uppercase strings:
 
 "FALSE"
 
-Example Test Files
+## Example Test Files
 Valid programs:
 
 example/program_valid.txt
@@ -169,7 +169,7 @@ example/program_error_syntax_missing_then.txt
 
 example/program_error_execution_uninitialized.txt
 
-How to Run Example Cases
+## How to Run Example Cases
 ```bash
 # 1. Successful compilation
 python logic_compiler.py example/program_valid.txt out_valid.json
@@ -189,9 +189,10 @@ python logic_compiler.py example/program_error_syntax_missing_then.txt out_missi
 # 6. Execution error case
 
 python logic_compiler.py example/program_error_execution_uninitialized.txt out_exec_error.json
-Testing
+```
+## Testing
 Unit test files are located in :tests/
-
+```bash
 tests/test_lexer.py
 
 tests/test_parser.py
