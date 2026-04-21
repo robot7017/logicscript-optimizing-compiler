@@ -93,7 +93,7 @@ For each simplified expression:
 ## Command-Line Usage
 
 Run the compiler with:
-
+```md
 ```bash
 python logic_compiler.py <input_file> <output_file>
 ```
@@ -103,71 +103,49 @@ Example:
 python logic_compiler.py example/program_valid.txt compiler_trace.json
 ```
 ## Input Format
+
 The input file must contain one LogicScript statement per non-empty line.
 
 Supported statements:
-
 - `let <variable> = <expression>`
-
 - `if <expression> then <statement>`
-
 - `print <variable>`
 
 Supported expressions:
-
-Base cases:
-
-T
-
-F
-
-single lowercase variable such as p
-
-Recursive cases:
-
-- `(NOT E)`
-
-- `(E1 AND E2)`
-
-- `(E1 OR E2)`
-
-- `(E1 IMPLIES E2)`
+- Base cases:
+  - `T`
+  - `F`
+  - single lowercase variable such as `p`
+- Recursive cases:
+  - `(NOT E)`
+  - `(E1 AND E2)`
+  - `(E1 OR E2)`
+  - `(E1 IMPLIES E2)`
 
 ## Output Format
+
 The compiler writes a JSON trace file containing:
 
-phase_1_lexer
-
-phase_2_parser
-
-phase_3_optimizer
-
-phase_4_execution
-
-error (if compilation halts early)
+- `phase_1_lexer`
+- `phase_2_parser`
+- `phase_3_optimizer`
+- `phase_4_execution`
+- `error` (if compilation halts early)
 
 All boolean values in JSON output are uppercase strings:
-
-"TRUE"
-
-"FALSE"
-
+- `"TRUE"`
+- `"FALSE"`
 ## Example Test Files
-Valid programs:
 
-example/program_valid.txt
+### Valid programs
+- `example/program_valid.txt`
+- `example/program_valid_implies.txt`
 
-example/program_valid_implies.txt
-
-Error cases:
-
-example/program_error_lexical_invalid_char.txt
-
-example/program_error_missing_operand.txt
-
-example/program_error_syntax_missing_then.txt
-
-example/program_error_execution_uninitialized.txt
+### Error cases
+- `example/program_error_lexical_invalid_char.txt`
+- `example/program_error_missing_operand.txt`
+- `example/program_error_syntax_missing_then.txt`
+- `example/program_error_execution_uninitialized.txt`
 
 ## How to Run Example Cases
 ```bash
@@ -191,7 +169,8 @@ python logic_compiler.py example/program_error_syntax_missing_then.txt out_missi
 python logic_compiler.py example/program_error_execution_uninitialized.txt out_exec_error.json
 ```
 ## Testing
-Unit test files are located in :tests/
+
+Unit test files are located in `tests/`:
 ```bash
 tests/test_lexer.py
 
@@ -201,10 +180,10 @@ tests/test_executor.py
 ```
 If you run tests manually, make sure you are in the project root directory. Example:
 
-```bash
-python tests/test_lexer.py
-python tests/test_parser.py
-python tests/test_executor.py
+```md
+- `tests/test_lexer.py`
+- `tests/test_parser.py`
+- `tests/test_executor.py`
 ```
 ## Development Notes
 This repository is organized in modular development form for readability and collaboration.
@@ -214,16 +193,16 @@ This repository is kept in modular form for development, debugging, and collabor
 ```bash
 logic_compiler_single.py
 ```
-The modular files (, , , , and the orchestrating ) are preserved in the repository for readability and testing.lexer.pyparser.pyoptimizer.pyexecutor.pylogic_compiler.py
+The modular files (`lexer.py`, `parser.py`, `optimizer.py`, `executor.py`, and the orchestrating `logic_compiler.py`) are preserved in the repository for readability and testing.
 
-Constraints and Design Choices
-Token names and AST formats follow SPEC.md
+## Constraints and Design Choices
 
-The optimizer preserves statement structure and only simplifies expressions
-
-Equivalence checking is truth-table-based
-
+- Token names and AST formats follow `SPEC.md`
+- The optimizer preserves statement structure and only simplifies expressions
+- Equivalence checking is truth-table-based
+- Errors are reported gracefully in JSON rather than crashing with a Python traceback
 Errors are reported gracefully in JSON rather than crashing with a Python traceback
 
 ## Authors / Collaboration
+
 This project was developed collaboratively by our team, with different members focusing on different phases of the compiler pipeline while maintaining shared understanding of the full system.
