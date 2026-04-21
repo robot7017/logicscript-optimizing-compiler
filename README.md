@@ -2,6 +2,21 @@
 
 This repository contains our implementation of a 4-phase LogicScript compiler for the UFUG2106 course project.
 
+## Table of Contents
+- [Project Goal](#project-goal)
+- [Pipeline Overview](#pipeline-overview)
+- [Repository Structure](#repository-structure)
+- [Requirements](#requirements)
+- [Command-Line Usage](#command-line-usage)
+- [Input Format](#input-format)
+- [Output Format](#output-format)
+- [Example Test Files](#example-test-files)
+- [How to Run Example Cases](#how-to-run-example-cases)
+- [Testing](#testing)
+- [Development Notes](#development-notes)
+- [Constraints and Design Choices](#constraints-and-design-choices)
+- [Authors / Collaboration](#authors--collaboration)
+
 ## Project Goal
 
 The compiler reads a multi-line LogicScript source file, validates its structure, simplifies logical expressions, verifies that optimization preserves meaning, executes the optimized program, and exports a structured JSON trace.
@@ -14,7 +29,7 @@ The pipeline is based on:
 ## Pipeline Overview
 
 ### Phase 1: Lexer
-Convert each source line into a list of standardized tokens.
+**Convert** each source line into a list of standardized tokens.
 
 Examples:
 - `let` -> `LET`
@@ -24,7 +39,7 @@ Examples:
 - `)` -> `R_PAREN`
 
 ### Phase 2: Parser
-Validate token order and convert token rows into nested prefix AST rows.
+**Validate** token order and **convert** token rows into nested prefix AST rows.
 
 Examples:
 - `(NOT p)` -> `["NOT", "VAR_P"]`
@@ -32,7 +47,7 @@ Examples:
 - `let x = (p OR T)` -> `["LET", "VAR_X", ["OR", "VAR_P", "TRUE"]]`
 
 ### Phase 3: Optimizer
-Recursively simplify logical expressions using allowed propositional logic laws.
+**Recursively simplify** logical expressions using allowed propositional logic laws.
 
 Implemented simplifications include:
 - Constant folding
@@ -49,10 +64,10 @@ Examples:
 
 ### Phase 4: Verification + Execution
 For each simplified expression:
-1. Generate a truth-table-based equivalence check between the original AST and optimized AST
-2. Execute the optimized statements
-3. Update the final state dictionary
-4. Record printed outputs
+1. **Generate** a truth-table-based equivalence check between the original AST and optimized AST.
+2. **Execute** the optimized statements.
+3. **Update** the final state dictionary.
+4. **Record** printed outputs.
 
 ## Repository Structure
 
@@ -79,132 +94,3 @@ Run the compiler with:
 
 ```bash
 python logic_compiler.py <input_file> <output_file>
-```
-
-Example:
-
-```bash
-python logic_compiler.py example/program_valid.txt compiler_trace.json
-```
-
-## Input Format
-
-The input file must contain one LogicScript statement per non-empty line.
-
-Supported statements:
-- `let <variable> = <expression>`
-- `if <expression> then <statement>`
-- `print <variable>`
-
-Supported expressions:
-- Base cases:
-  - `T`
-  - `F`
-  - single lowercase variable such as `p`
-- Recursive cases:
-  - `(NOT E)`
-  - `(E1 AND E2)`
-  - `(E1 OR E2)`
-  - `(E1 IMPLIES E2)`
-
-## Output Format
-
-The compiler writes a JSON trace file containing:
-
-- `phase_1_lexer`
-- `phase_2_parser`
-- `phase_3_optimizer`
-- `phase_4_execution`
-- `error` (if compilation halts early)
-
-All boolean values in JSON output are uppercase strings:
-- `"TRUE"`
-- `"FALSE"`
-
-## Example Test Files
-
-### Valid programs
-- `example/program_valid.txt`
-- `example/program_valid_implies.txt`
-
-### Error cases
-- `example/program_error_lexical_invalid_char.txt`
-- `example/program_error_missing_operand.txt`
-- `example/program_error_syntax_missing_then.txt`
-- `example/program_error_execution_uninitialized.txt`
-
-## How to Run Example Cases
-
-### 1. Successful compilation
-
-```bash
-python logic_compiler.py example/program_valid.txt out_valid.json
-```
-
-### 2. Valid implication example
-
-```bash
-python logic_compiler.py example/program_valid_implies.txt out_implies.json
-```
-
-### 3. Lexical error case
-
-```bash
-python logic_compiler.py example/program_error_lexical_invalid_char.txt out_lex_error.json
-```
-
-### 4. Syntax error case
-
-```bash
-python logic_compiler.py example/program_error_missing_operand.txt out_syntax_error.json
-```
-
-### 5. Missing `then` syntax error case
-
-```bash
-python logic_compiler.py example/program_error_syntax_missing_then.txt out_missing_then.json
-```
-
-### 6. Execution error case
-
-```bash
-python logic_compiler.py example/program_error_execution_uninitialized.txt out_exec_error.json
-```
-
-## Testing
-
-Unit test files are located in `tests/`:
-- `tests/test_lexer.py`
-- `tests/test_parser.py`
-- `tests/test_executor.py`
-
-If you run tests manually, make sure you are in the project root directory.
-
-Example:
-
-```bash
-python tests/test_lexer.py
-python tests/test_parser.py
-python tests/test_executor.py
-```
-
-## Development Notes
-
-This repository is organized in modular development form for readability and collaboration.
-
-For final course submission, the safest packaging strategy is to provide:
-1. a self-contained `logic_compiler.py`
-2. a comprehensive `README.md`
-3. the technical brief
-4. demonstration test files
-
-## Constraints and Design Choices
-
-- Token names and AST formats follow `SPEC.md`
-- The optimizer preserves statement structure and only simplifies expressions
-- Equivalence checking is truth-table-based
-- Errors are reported gracefully in JSON rather than crashing with a Python traceback
-
-## Authors / Collaboration
-
-This project was developed collaboratively by our team, with different members focusing on different phases of the compiler pipeline while maintaining shared understanding of the full system.
