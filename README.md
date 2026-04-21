@@ -106,13 +106,13 @@ python logic_compiler.py example/program_valid.txt compiler_trace.json
 The input file must contain one LogicScript statement per non-empty line.
 
 Supported statements:
-
+```bash
 let <variable> = <expression>
 
 if <expression> then <statement>
 
 print <variable>
-
+```
 Supported expressions:
 
 Base cases:
