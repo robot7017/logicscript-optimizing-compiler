@@ -205,10 +205,10 @@ python tests/test_lexer.py
 python tests/test_parser.py
 python tests/test_executor.py
 ```
-Development Notes
+## Development Notes
 This repository is organized in modular development form for readability and collaboration.
 
-Final Submission Packaging
+## Final Submission Packaging
 This repository is kept in modular form for development, debugging, and collaboration. For the final course submission that requires a self-contained single Python file, use:
 ```bash
 logic_compiler_single.py
@@ -224,5 +224,5 @@ Equivalence checking is truth-table-based
 
 Errors are reported gracefully in JSON rather than crashing with a Python traceback
 
-Authors / Collaboration
+## Authors / Collaboration
 This project was developed collaboratively by our team, with different members focusing on different phases of the compiler pipeline while maintaining shared understanding of the full system.
