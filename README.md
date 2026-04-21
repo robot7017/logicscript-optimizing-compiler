@@ -79,97 +79,132 @@ Run the compiler with:
 
 ```bash
 python logic_compiler.py <input_file> <output_file>
+```
 
 Example:
 
+```bash
 python logic_compiler.py example/program_valid.txt compiler_trace.json
-Input Format
+```
+
+## Input Format
 
 The input file must contain one LogicScript statement per non-empty line.
 
 Supported statements:
-
-let <variable> = <expression>
-if <expression> then <statement>
-print <variable>
+- `let <variable> = <expression>`
+- `if <expression> then <statement>`
+- `print <variable>`
 
 Supported expressions:
+- Base cases:
+  - `T`
+  - `F`
+  - single lowercase variable such as `p`
+- Recursive cases:
+  - `(NOT E)`
+  - `(E1 AND E2)`
+  - `(E1 OR E2)`
+  - `(E1 IMPLIES E2)`
 
-Base cases:
-T
-F
-single lowercase variable such as p
-Recursive cases:
-(NOT E)
-(E1 AND E2)
-(E1 OR E2)
-(E1 IMPLIES E2)
-Output Format
+## Output Format
 
 The compiler writes a JSON trace file containing:
 
-phase_1_lexer
-phase_2_parser
-phase_3_optimizer
-phase_4_execution
-error (if compilation halts early)
+- `phase_1_lexer`
+- `phase_2_parser`
+- `phase_3_optimizer`
+- `phase_4_execution`
+- `error` (if compilation halts early)
 
 All boolean values in JSON output are uppercase strings:
+- `"TRUE"`
+- `"FALSE"`
 
-"TRUE"
-"FALSE"
-Example Test Files
-Valid programs
-example/program_valid.txt
-example/program_valid_implies.txt
-Error cases
-example/program_error_lexical_invalid_char.txt
-example/program_error_missing_operand.txt
-example/program_error_syntax_missing_then.txt
-example/program_error_execution_uninitialized.txt
-How to Run Example Cases
-1. Successful compilation
+## Example Test Files
+
+### Valid programs
+- `example/program_valid.txt`
+- `example/program_valid_implies.txt`
+
+### Error cases
+- `example/program_error_lexical_invalid_char.txt`
+- `example/program_error_missing_operand.txt`
+- `example/program_error_syntax_missing_then.txt`
+- `example/program_error_execution_uninitialized.txt`
+
+## How to Run Example Cases
+
+### 1. Successful compilation
+
+```bash
 python logic_compiler.py example/program_valid.txt out_valid.json
-2. Valid implication example
+```
+
+### 2. Valid implication example
+
+```bash
 python logic_compiler.py example/program_valid_implies.txt out_implies.json
-3. Lexical error case
+```
+
+### 3. Lexical error case
+
+```bash
 python logic_compiler.py example/program_error_lexical_invalid_char.txt out_lex_error.json
-4. Syntax error case
+```
+
+### 4. Syntax error case
+
+```bash
 python logic_compiler.py example/program_error_missing_operand.txt out_syntax_error.json
-5. Missing then syntax error case
+```
+
+### 5. Missing `then` syntax error case
+
+```bash
 python logic_compiler.py example/program_error_syntax_missing_then.txt out_missing_then.json
-6. Execution error case
+```
+
+### 6. Execution error case
+
+```bash
 python logic_compiler.py example/program_error_execution_uninitialized.txt out_exec_error.json
-Testing
+```
 
-Unit test files are located in tests/:
+## Testing
 
-tests/test_lexer.py
-tests/test_parser.py
-tests/test_executor.py
+Unit test files are located in `tests/`:
+- `tests/test_lexer.py`
+- `tests/test_parser.py`
+- `tests/test_executor.py`
 
 If you run tests manually, make sure you are in the project root directory.
 
 Example:
 
+```bash
 python tests/test_lexer.py
 python tests/test_parser.py
 python tests/test_executor.py
-Development Notes
+```
+
+## Development Notes
 
 This repository is organized in modular development form for readability and collaboration.
 
 For final course submission, the safest packaging strategy is to provide:
+1. a self-contained `logic_compiler.py`
+2. a comprehensive `README.md`
+3. the technical brief
+4. demonstration test files
 
-a self-contained logic_compiler.py
-a comprehensive README.md
-the technical brief
-demonstration test files
-Constraints and Design Choices
-Token names and AST formats follow SPEC.md
-The optimizer preserves statement structure and only simplifies expressions
-Equivalence checking is truth-table-based
-Errors are reported gracefully in JSON rather than crashing with a Python traceback
-Authors / Collaboration
+## Constraints and Design Choices
+
+- Token names and AST formats follow `SPEC.md`
+- The optimizer preserves statement structure and only simplifies expressions
+- Equivalence checking is truth-table-based
+- Errors are reported gracefully in JSON rather than crashing with a Python traceback
+
+## Authors / Collaboration
 
 This project was developed collaboratively by our team, with different members focusing on different phases of the compiler pipeline while maintaining shared understanding of the full system.
