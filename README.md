@@ -195,7 +195,6 @@ This repository is organized in modular development form for readability and col
 ## Final Submission Packaging
 
 This repository is kept in modular form for development, debugging, and collaboration. 
-
 For the final course submission that requires a self-contained single Python file, use:
 
 - `logic_compiler_single.py`
