@@ -71,19 +71,15 @@ Expected high-level behavior:
 
 ## Development Status
 
-Implemented:
+Completed:
 - repository skeleton
 - command-line/file I/O skeleton in `logic_compiler.py`
 - stable interface contract in `SPEC.md`
-
-In progress:
 - Phase 1 lexer
 - Phase 2 parser
-
-Pending:
 - Phase 3 optimizer
 - Phase 4 verification and execution
-- complete test suite
+- complete test suite (unit tests and end-to-end integration tests)
 
 ## Testing
 

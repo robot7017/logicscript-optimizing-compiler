@@ -1,0 +1,3 @@
+let p = F
+let q = (p OR T)
+print q

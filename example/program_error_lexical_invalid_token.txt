@@ -1,0 +1,2 @@
+let prop = T
+print prop
