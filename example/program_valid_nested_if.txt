@@ -1,0 +1,2 @@
+let p = T
+if p then if p then print p
