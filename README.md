@@ -106,13 +106,13 @@ python logic_compiler.py example/program_valid.txt compiler_trace.json
 The input file must contain one LogicScript statement per non-empty line.
 
 Supported statements:
-```bash
-let <variable> = <expression>
 
-if <expression> then <statement>
+- `let <variable> = <expression>`
 
-print <variable>
-```
+- `if <expression> then <statement>`
+
+- `print <variable>`
+
 Supported expressions:
 
 Base cases:
@@ -125,13 +125,13 @@ single lowercase variable such as p
 
 Recursive cases:
 
-(NOT E)
+- `(NOT E)`
 
-(E1 AND E2)
+- `(E1 AND E2)`
 
-(E1 OR E2)
+- `(E1 OR E2)`
 
-(E1 IMPLIES E2)
+- `(E1 IMPLIES E2)`
 
 ## Output Format
 The compiler writes a JSON trace file containing:
