@@ -96,10 +96,12 @@ Run the compiler with:
 
 ```bash
 python logic_compiler.py <input_file> <output_file>
+```
 Example:
 
-Bash
+```bash
 python logic_compiler.py example/program_valid.txt compiler_trace.json
+```
 Input Format
 The input file must contain one LogicScript statement per non-empty line.
 
@@ -168,7 +170,7 @@ example/program_error_syntax_missing_then.txt
 example/program_error_execution_uninitialized.txt
 
 How to Run Example Cases
-Bash
+```bash
 # 1. Successful compilation
 python logic_compiler.py example/program_valid.txt out_valid.json
 
@@ -185,6 +187,7 @@ python logic_compiler.py example/program_error_missing_operand.txt out_syntax_er
 python logic_compiler.py example/program_error_syntax_missing_then.txt out_missing_then.json
 
 # 6. Execution error case
+
 python logic_compiler.py example/program_error_execution_uninitialized.txt out_exec_error.json
 Testing
 Unit test files are located in :tests/
@@ -194,21 +197,22 @@ tests/test_lexer.py
 tests/test_parser.py
 
 tests/test_executor.py
-
+```
 If you run tests manually, make sure you are in the project root directory. Example:
 
-Bash
+```bash
 python tests/test_lexer.py
 python tests/test_parser.py
 python tests/test_executor.py
+```
 Development Notes
 This repository is organized in modular development form for readability and collaboration.
 
 Final Submission Packaging
 This repository is kept in modular form for development, debugging, and collaboration. For the final course submission that requires a self-contained single Python file, use:
-
+```bash
 logic_compiler_single.py
-
+```
 The modular files (, , , , and the orchestrating ) are preserved in the repository for readability and testing.lexer.pyparser.pyoptimizer.pyexecutor.pylogic_compiler.py
 
 Constraints and Design Choices
