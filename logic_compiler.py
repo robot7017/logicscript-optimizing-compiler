@@ -79,20 +79,6 @@ def tokenize_line(line: str, line_number: int) -> list[str]:
 
     return tokens
 
-
-def run_lexer(source_lines: Sequence[str]) -> list[dict[str, object]]:
-    """Tokenize all source lines and return phase_1_lexer JSON-ready records."""
-    phase_1_rows: list[dict[str, object]] = []
-
-    for line_number, source_line in enumerate(source_lines, start=1):
-        if not source_line.strip():
-            continue
-
-        token_row = tokenize_line(source_line, line_number)
-        phase_1_rows.append({"line": line_number, "tokens": token_row})
-
-    return phase_1_rows
-
 # =========================
 # Phase 2: Parser
 # =========================
@@ -233,18 +219,6 @@ def parse_tokens(line_no: int, tokens: list[str]) -> dict:
     """Parse one Phase 1 token row into the Phase 2 external row contract."""
     statement_ast = parse_statement(tokens, line_number=line_no)
     return {"line": line_no, "ast": statement_ast}
-
-
-def run_parser(phase_1_rows: Sequence[dict[str, object]]) -> list[dict[str, object]]:
-    """Parse Phase 1 output rows and return phase_2_parser JSON-ready records."""
-    phase_2_rows: list[dict[str, object]] = []
-
-    for row in phase_1_rows:
-        line_number = int(row["line"])
-        tokens = list(row["tokens"])
-        phase_2_rows.append(parse_tokens(line_number, tokens))
-
-    return phase_2_rows
 
 # =========================
 # Phase 3: Optimizer
