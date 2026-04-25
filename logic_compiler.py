@@ -585,9 +585,10 @@ def run_executor(phase_3_rows: Sequence[dict[str, object]]) -> dict[str, Any]:
                 _collect_expression_asts(optimized_ast, optimized_expressions)
 
             for original_expr, optimized_expr in zip(original_expressions, optimized_expressions):
-                verification = verify_equivalence(original_expr, optimized_expr)
-                verification["line"] = line_num
-                verifications.append(verification)
+                if original_expr != optimized_expr:
+                    verification = verify_equivalence(original_expr, optimized_expr)
+                    verification["line"] = line_num
+                    verifications.append(verification)
 
             if optimized_ast is not None:
                 execute_statement(optimized_ast, state_dict, printed_output, line_num)
@@ -614,17 +615,11 @@ def run_executor(phase_3_rows: Sequence[dict[str, object]]) -> dict[str, Any]:
 # =========================
 
 def build_initial_trace() -> dict[str, Any]:
-    """Return the stable top-level JSON shape used by the project specification."""
-    return {
-        "phase_1_lexer": [],
-        "phase_2_parser": [],
-        "phase_3_optimizer": [],
-        "phase_4_execution": {
-            "verifications": [],
-            "final_state_dictionary": {},
-            "printed_output": [],
-        },
-    }
+    """Return an initially empty trace.
+
+    Phases are added only after they successfully complete.
+    """
+    return {}
 
 
 def _extract_line_number(error_text: str) -> int:
@@ -711,8 +706,9 @@ def main(argv: list[str] | None = None) -> int:
 
             executor_results = run_executor(phase_3_rows)
             if "error" in executor_results:
-                pipeline_results_dict["error"] = executor_results.pop("error")
-            pipeline_results_dict["phase_4_execution"] = executor_results
+                pipeline_results_dict["error"] = executor_results["error"]
+            else:
+                pipeline_results_dict["phase_4_execution"] = executor_results
 
     try:
         output_path.write_text(
