@@ -55,7 +55,7 @@ Expressions:
 
 ## Output JSON Structure
 
-The compiler writes a trace with these top-level keys:
+For successful compilation, the compiler writes a trace with these top-level keys:
 
 - `phase_1_lexer`
 - `phase_2_parser`
@@ -69,9 +69,9 @@ Boolean values are serialized as uppercase strings: `"TRUE"` and `"FALSE"`.
 
 The compiler fails fast on the first error and still writes a valid JSON output:
 
-- preserves completed phases
-- stops later phases
-- reports root-level error:
+- preserves only completed phases
+- does not emit later phase keys after the error point
+- reports a root-level error object
 
 ```json
 {
